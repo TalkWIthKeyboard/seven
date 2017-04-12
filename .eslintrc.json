@@ -1,0 +1,67 @@
+{
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "rules": {
+    // 全局严格模式
+    "strict": [2, "global"],
+    // 数组内的括号紧挨不能有空格
+    "array-bracket-spacing": [2, "never"],
+    // 强制把变量的使用限制在其定义的作用域范围内
+    "block-scoped-var": 2,
+    // 大括号风格为缩进风格
+    "brace-style": [2, "1tbs"],
+    // 强制使用骆驼拼写法命名约定
+    "camelcase": 1,
+    // 强制在计算的属性的方括号中不使用的空格
+    "computed-property-spacing": [2, "never"],
+    // 强制所有控制语句在多条时必须使用括号包含
+    "curly": [2, "multi"],
+    // 要求或禁止文件末尾存在空行
+    "eol-last": 2,
+    // 智能强制使用三联等
+    "eqeqeq": [2, "smart"],
+    // 强制使用2个空格缩进
+    "indent": ["error", 2],
+    // 强制可嵌套的块的最大深度为3
+    "max-depth": [1, 3],
+    // 强制一行的最大长度为80
+    "max-len": [1, 80],
+    // 强制函数块最多允许的的语句数量为50行
+    "max-statements": [1, 50],
+    // 要求构造函数首字母大写
+    "new-cap": 1,
+    // 禁止扩展原生类型
+    "no-extend-native": 2,
+    // 禁止空格和 tab 的混合缩进
+    "no-mixed-spaces-and-tabs": 2,
+    // 禁用行尾空格
+    "no-trailing-spaces": 2,
+    // 禁止出现未使用过的变量
+    "no-unused-vars": 1,
+    // 禁止在变量定义之前使用它们
+    "no-use-before-define": [2, "nofunc"],
+    // 关闭禁用console报错
+    "no-console": 0,
+    // 不允许花括号紧挨处有空格
+    "object-curly-spacing": [2, "never"],
+    // 统一使用单引号，字符串中允许混用
+    "quotes": [2, "single", "avoid-escape"],
+    // 强制全部使用分号
+    "semi": [2, "always"],
+    // 关键字前后强制使用空格
+    "keyword-spacing": [2, {"before": true, "after": true}],
+    // 要求中缀操作符周围有空格
+    "space-infix-ops": 2,
+    // 强制在一元操作符前后使用一致的空格
+    "space-unary-ops": [2, {
+      "words": true,
+      "nonwords": true
+    }]
+  }
+}
