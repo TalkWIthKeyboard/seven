@@ -19,22 +19,45 @@ let Conf = require('./../factory/confFactory');
  */
 let bfsTraversal = (obj, scb, fcb) => {
   let queue = [];
-  let head = -1;
+  let head = - 1;
   let foot = 0;
   // 判断对象是否合法
   let judge = (obj) => {
-    if (_.indexOf(Conf.dataBaseConf.mongoAttribute, obj) === -1 && !_.isObject(obj))
-      return fcb('属性中有不合法的声明');
+    let errInfo = '属性中有不合法的声明';
+    // 不符合基本数据类型
+    if (
+      _.indexOf(Conf.dataBaseConf.mongoStringAtr, obj) === - 1
+      && ! _.isObject(obj)
+      && ! _.isArray(obj)
+    )
+      return fcb(errInfo);
+
+    // 数组中的首位声明非法，数组长度超过2
+    if (
+      _.isArray(obj)
+      && ((obj.length > 0 && _.indexOf(Conf.dataBaseConf.mongoArrayAtr, obj[0]) === - 1) || (obj.length > 2))
+    )
+      return fcb(errInfo);
+
+    // 数组中的第二位数据类型与首位不对应
+    if (
+      _.isArray(obj)
+      && obj.length > 1
+      && _.indexOf(Conf.dataBaseConf.mongoArrayAtr, obj[0]) !== - 1
+      && (! Conf.dataBaseConf.mongoArrayRule[obj[0]](obj[1]))
+    )
+      return fcb(errInfo);
   };
+
   // 开始遍历
   while (head <= foot) {
-    let valueList = head === -1 ? obj : _.values(queue[head]);
+    let valueList = head === - 1 ? obj : _.values(queue[head]);
     _.each(valueList, (value) => {
       judge(value);
-      _.isObject(value) ? queue.push(value) : null;
-      foot += _.isObject(value) ? 1 : 0;
+      _.isObject(value) && ! _.isArray(value) ? queue.push(value) : null;
+      foot += _.isObject(value) && ! _.isArray(value) ? 1 : 0;
     });
-    head++;
+    head ++;
   }
   scb();
 };
@@ -69,12 +92,12 @@ let jsonParser = (filename, cb) => {
     let classObj = valueList[0];
     // 对象的属性声明是否完全符合要求
     bfsTraversal(classObj, () => {
-        let rulesObj = null;
-        if (keyList.length > 1) rulesObj = valueList[1];
-        return cb(null, Builder.classBuilder(className, classObj, rulesObj));
-      }, (err) => {
-        return cb(Builder.errorBuilder('对象声明异常', err));
-      }
+      let rulesObj = null;
+      if (keyList.length > 1) rulesObj = valueList[1];
+      return cb(null, Builder.classBuilder(className, classObj, rulesObj));
+    }, (err) => {
+      return cb(Builder.errorBuilder('对象声明异常', err));
+    }
     );
   });
 };
