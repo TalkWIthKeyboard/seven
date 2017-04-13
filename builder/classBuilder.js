@@ -14,7 +14,7 @@ let pub = {};
 pub.classBuilder = (className, classObj, rulesObj) => {
   return rulesObj
     ? {'className': className, 'classObj': classObj, 'rulesObj': rulesObj}
-    : {'className': className, 'classObj': classObj}
+    : {'className': className, 'classObj': classObj};
 };
 
 module.exports = pub;
