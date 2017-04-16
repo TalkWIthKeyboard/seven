@@ -15,5 +15,4 @@ pub.mongoArrayRule = {
   'Date': _.isString,
   'ObjectId': _.isString
 };
-
 module.exports = pub;

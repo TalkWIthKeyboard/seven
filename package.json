@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "eslint --fix ./",
-    "start": "node ./parser/classParser"
+    "start": "node ./connector/jsonToMongoConnector"
   },
   "author": "TalkWithKeyboard",
   "license": "ISC",
@@ -13,6 +13,7 @@
     "chai": "^3.5.0",
     "eslint": "^3.19.0",
     "mocha": "^3.2.0",
+    "mongoose": "^4.9.4",
     "promise": "^7.1.1",
     "underscore": "^1.8.3"
   }

@@ -1,6 +1,6 @@
 /**
  * Created by CoderSong on 17/4/12.
- * 类解析器（与用户接触的第一层）
+ * json类解析器（与用户接触的第一层）
  */
 
 let pub = {};
@@ -85,7 +85,7 @@ let jsonParser = (filename, cb) => {
     // 现在默认第一个为对象原型，第二个为扩展方法
     if (keyList.length > 2)
       return cb(Builder.errorBuilder('json的第一层key个数大于2'));
-    if (keyList[0] === 'rules')
+    if (keyList[0] === 'Func')
       return cb(Builder.errorBuilder('json的第一层第二个才是扩展方法定义'));
     // 先解析类对象
     let className = keyList[0];
@@ -137,12 +137,5 @@ pub.classFileFinder = (scb, fcb) => {
     });
   }
 };
-
-
-pub.classFileFinder((results) => {
-  console.log(results);
-}, (err) => {
-  console.log(err);
-});
 
 module.exports = pub;

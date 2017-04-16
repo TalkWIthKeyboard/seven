@@ -5,6 +5,7 @@
 let pub = {};
 
 pub.dataBaseConf = require('./../conf/dataBaseConf');
+pub.schemaGeneralConf = require('./../conf/schemaGeneralConf');
 
 
 module.exports = pub;
