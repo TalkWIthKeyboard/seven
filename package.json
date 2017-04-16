@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "eslint --fix ./",
-    "start": "node ./connector/jsonToMongoConnector"
+    "start": "node ./connector/shemaToMongoConnector"
   },
   "author": "TalkWithKeyboard",
   "license": "ISC",
