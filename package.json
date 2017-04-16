@@ -4,7 +4,8 @@
   "description": "This is a back-end frame in node.",
   "main": "index.js",
   "scripts": {
-    "test": "eslint --fix ./",
+    "tst": "eslint --fix ./",
+    "test": "mocha ./test/",
     "start": "node ./connector/jsonToMongoConnector"
   },
   "author": "TalkWithKeyboard",
