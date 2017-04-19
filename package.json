@@ -1,11 +1,10 @@
 {
   "name": "seven",
   "version": "0.0.1",
-  "description": "This is a back-end frame in node.",
+  "description": "This is a back-end frame plug-in in node.",
   "main": "index.js",
   "scripts": {
-    "test": "eslint --fix ./lib",
-    "start": "node ./connector/shemaToMongoConnector"
+    "test": "eslint --fix ./lib"
   },
   "author": "TalkWithKeyboard",
   "license": "ISC",
