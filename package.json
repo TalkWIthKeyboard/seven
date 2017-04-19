@@ -4,7 +4,7 @@
   "description": "This is a back-end frame in node.",
   "main": "index.js",
   "scripts": {
-    "test": "eslint --fix ./",
+    "test": "eslint --fix ./lib",
     "start": "node ./connector/shemaToMongoConnector"
   },
   "author": "TalkWithKeyboard",
