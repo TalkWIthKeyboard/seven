@@ -2,6 +2,7 @@
 ![node-icon](https://img.shields.io/badge/node-6.2.2-blue.svg) ![express-icon](https://img.shields.io/badge/express-4.15.2-yellow.svg) ![mongoose-icon](https://img.shields.io/badge/mongoose-4.9.4-yellow.svg) ![build-icon](https://img.shields.io/badge/build-passing-brightgreen.svg)
 
 > This is a plug-in in node.js mapping **API** and **Mongoose.Schema** automatically.
+>
 > Version: 0.0.3
 
 ## Installation
