@@ -1,13 +1,13 @@
 {
-  "name": "seven",
-  "version": "0.0.1",
+  "name": "seven-express",
+  "version": "0.0.3",
   "description": "This is a back-end frame plug-in in node.",
   "main": "index.js",
   "scripts": {
-    "test": "eslint --fix ./lib"
+    "test": "eslint --fix ./lib && eslint --fix index.js"
   },
-  "author": "TalkWithKeyboard",
-  "license": "ISC",
+  "author": "show_me_code",
+  "license": "MIT",
   "dependencies": {
     "chai": "^3.5.0",
     "colors": "^1.1.2",

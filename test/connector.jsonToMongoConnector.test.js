@@ -12,6 +12,6 @@ describe('classFileFinder接口的测试', () => {
       expect(results).to.not.be.null;
     }, (err) => {
       expect(err).to.not.be.undefined;
-    })
-  })
+    });
+  });
 });

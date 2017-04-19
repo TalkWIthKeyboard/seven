@@ -11,6 +11,7 @@ let router = express.Router();
 let _model = require('./lib/creator').modelCreator;
 let _api = require('./lib/creator').apiCreator;
 let _url = require('./lib/creator').urlCreator;
+let apiMap = require('./lib/factory/confFactory').schemaGeneralConf.apiMapping;
 
 /**
  * 创造器
@@ -19,47 +20,74 @@ let _url = require('./lib/creator').urlCreator;
  * @param scb 成功回调
  * @param fcb 失败回调
  */
-pub.creator = (schemaPath, scb, fcb) => {
+pub.creator = (schemaPath, rule, scb, fcb) => {
+  let _rule = {};
+
   Promise.resolve(schemaPath)
     .then(_model)
     .then(_api)
     .then(_url)
     .then((urlObj) => {
+      // 处理规则
+      _.each(_.keys(urlObj), (key) => {
+        _rule[key + 's'] = {};
+        _.each(_.keys(apiMap), (func) => {
+          _rule[key + 's'][func] = true;
+        });
+      });
+      _.mapObject(rule, (value, key) => {
+        _.mapObject(value, (_value, _key) => {
+          _rule[key + 's'][_key] = _value;
+        });
+      });
+
+      // 生成映射
       _.each(_.values(urlObj), (value) => {
         let model = value.model;
         _.each(_.mapObject(value), (_value, _keys) => {
           if (_keys === 'model') return;
-          if (_value.type === 'get') {
-            // GET
-            if (_value.funcType === 'Retrieve')
-              router.get(_value.url, (req, res, next) => {
-                _value.func(req, res, model, ['id'], next);
+          let func = _rule[model.collection.name][_value.funcType];
+          if (func) {
+            if (_value.type === 'get') {
+              // GET
+              if (_value.funcType === 'Retrieve')
+                router.get(_value.url, (req, res, next) => {
+                  _value.func(req, res, model, func.paramsList || ['id'], next);
+                });
+
+              // Pagination
+              if (_value.funcType === 'Pagination')
+                router.get(_value.url, (req, res, next) => {
+                  _value.func(req, res, model, func.paramsList || ['page'], next);
+                });
+            }
+
+            // Create
+            if (_value.type === 'post')
+              router.post(_value.url, (req, res, next) => {
+                func.bodyList
+                  ? _value.func(req, res, model, func.bodyList, func.key || null, next)
+                  : _value.func(req, res, model, null, func.key || null, next);
               });
-            // Pagination
-            if (_value.funcType === 'Pagination')
-              router.get(_value.url, (req, res, next) => {
-                _value.func(req, res, model, ['page'], next)
+
+
+            // Delete
+            if (_value.type === 'delete')
+              router.delete(_value.url, (req, res, next) => {
+                _value.func(req, res, model, func.paramsList || ['id'], next);
               });
+
+
+            // Update
+            if (_value.type === 'put')
+              router.put(_value.url, (req, res, next) => {
+                func.bodyList
+                  ? _value.func(req, res, model, func.paramsList || ['id'], func.bodyList, next)
+                  : _value.func(req, res, model, func.paramsList || ['id'], null, next);
+              });
+
           }
-          // Create
-          if (_value.type === 'post') {
-            router.post(_value.url, (req, res, next) => {
-              _value.func(req, res, model, null, null, next);
-            });
-          }
-          // Delete
-          if (_value.type === 'delete') {
-            router.delete(_value.url, (req, res, next) => {
-              _value.func(req, res, model, ['id'], next)
-            });
-          }
-          // Update
-          if (_value.type === 'put') {
-            router.put(_value.url, (req, res, next) => {
-              _value.func(req, res, model, ['id'], null, next)
-            });
-          }
-        })
+        });
       });
 
       // 输出API
@@ -68,7 +96,9 @@ pub.creator = (schemaPath, scb, fcb) => {
         console.log('\n', colors.gray(name));
         delete value.model;
         _.each(value, (_value) => {
-          console.log('   ', _value.funcType.cyan, _value.type.green, _value.url.blue);
+          if (_rule[name][_value.funcType])
+            console.log('   ', _value.funcType.cyan, _value.type.green, _value.url.blue);
+
         });
       });
 
