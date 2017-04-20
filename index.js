@@ -7,9 +7,7 @@ let _ = require('underscore');
 let fs = require('fs');
 let path = require('path');
 let Promise = require('promise');
-let express = require('express');
 let colors = require('colors');
-let router = express.Router();
 let _model = require('./lib/creator').modelCreator;
 let _api = require('./lib/creator').apiCreator;
 let _url = require('./lib/creator').urlCreator;
@@ -24,10 +22,11 @@ pub.errorHandler = require('./lib/error').errorHandler;
 /**
  * 创造器
  * @param app
+ * @param router
  * @param schemaPath
  * @param fcb 失败回调
  */
-pub.creator = (app, schemaPath, fcb) => {
+pub.creator = (app, router, schemaPath, fcb) => {
   let configure = require(path.join(__dirname, '..', '.seven.json'));
   let rule = configure.rule;
   let authority = configure.authority;
