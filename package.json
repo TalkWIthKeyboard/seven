@@ -1,6 +1,6 @@
 {
   "name": "seven-express",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "This is a back-end frame plug-in in node.",
   "main": "index.js",
   "scripts": {
@@ -9,11 +9,8 @@
   "author": "show_me_code",
   "license": "MIT",
   "dependencies": {
-    "chai": "^3.5.0",
     "colors": "^1.1.2",
     "eslint": "^3.19.0",
-    "express": "^4.15.2",
-    "mocha": "^3.2.0",
     "mongoose": "^4.9.4",
     "promise": "^7.1.1",
     "string-format": "^0.5.0",
