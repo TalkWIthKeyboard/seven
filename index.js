@@ -27,7 +27,7 @@ pub.errorHandler = require('./lib/error').errorHandler;
  * @param fcb 失败回调
  */
 pub.creator = (app, router, schemaPath, fcb) => {
-  let configure = require(path.join(__dirname, '..', '.seven.json'));
+  let configure = require(path.join(__dirname, '..', '..', '.seven.json'));
   let rule = configure.rule;
   let authority = configure.authority;
   let _rule = {};
@@ -43,12 +43,12 @@ pub.creator = (app, router, schemaPath, fcb) => {
         _rule[key + 's'] = {};
         _.each(_.keys(apiMap), (func) => {
           _rule[key + 's'][func] = true;
-        })
+        });
       });
       _.mapObject(rule, (value, key) => {
         _.mapObject(value, (_value, _key) => {
           _rule[key + 's'][_key] = _value;
-        })
+        });
       });
 
       // 生成映射
@@ -61,13 +61,13 @@ pub.creator = (app, router, schemaPath, fcb) => {
             // GET
             if (_value.funcType === 'Retrieve')
               router.get(_value.url, (req, res, next) => {
-                _value.func(req, res, model, func.paramsList || ['id'], next)
+                _value.func(req, res, model, func.paramsList || ['id'], next);
               });
 
             // Pagination
             if (_value.funcType === 'Pagination')
               router.get(_value.url, (req, res, next) => {
-                _value.func(req, res, model, func.paramsList || ['page'], next)
+                _value.func(req, res, model, func.paramsList || ['page'], next);
               });
 
             // Create
@@ -75,13 +75,13 @@ pub.creator = (app, router, schemaPath, fcb) => {
               router.post(_value.url, (req, res, next) => {
                 func.bodyList
                   ? _value.func(req, res, model, func.bodyList, func.key || null, next)
-                  : _value.func(req, res, model, null, func.key || null, next)
+                  : _value.func(req, res, model, null, func.key || null, next);
               });
 
             // Delete
             if (_value.funcType === 'Delete')
               router.delete(_value.url, (req, res, next) => {
-                _value.func(req, res, model, func.paramsList || ['id'], next)
+                _value.func(req, res, model, func.paramsList || ['id'], next);
               });
 
             // Update
@@ -89,17 +89,16 @@ pub.creator = (app, router, schemaPath, fcb) => {
               router.put(_value.url, (req, res, next) => {
                 func.bodyList
                   ? _value.func(req, res, model, func.paramsList || ['id'], func.bodyList, next)
-                  : _value.func(req, res, model, func.paramsList || ['id'], null, next)
+                  : _value.func(req, res, model, func.paramsList || ['id'], null, next);
               });
 
             // Login
-            if (_value.funcType === 'Login'){
+            if (_value.funcType === 'Login')
               router.post(_value.url, (req, res, next) => {
                 _value.func(req, res, model, next);
               });
-            }
           }
-        })
+        });
       });
 
       // 输出API
@@ -108,9 +107,8 @@ pub.creator = (app, router, schemaPath, fcb) => {
         console.log('\n', colors.gray(name));
         delete value.model;
         _.each(value, (_value) => {
-          if (_rule[name][_value.funcType]) {
+          if (_rule[name][_value.funcType])
             console.log('   ', _value.funcType.cyan, _value.type.green, _value.url.blue);
-          }
         });
       });
 

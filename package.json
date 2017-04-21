@@ -1,6 +1,6 @@
 {
   "name": "seven-express",
-  "version": "0.0.4",
+  "version": "0.0.7",
   "description": "This is a back-end frame plug-in in node.",
   "main": "index.js",
   "scripts": {
